@@ -580,22 +580,36 @@ monthFilter.addEventListener("change", renderTransactions);
 // 15. Active sidebar navigation
 const navLinks = document.querySelectorAll(".nav-link");
 
+navLinks.forEach(link => {
+  link.addEventListener("click", function () {
+    navLinks.forEach(nav => {
+      nav.classList.remove("active");
+      nav.removeAttribute("aria-current");
+    });
+
+    this.classList.add("active");
+    this.setAttribute("aria-current", "page");
+  });
+});
+
 function updateActiveNav() {
-  const validHashes = ["#overview", "#transactions", "#analytics"];
-  const currentHash = validHashes.includes(window.location.hash)
-    ? window.location.hash
-    : "#overview";
+  const currentHash = window.location.hash || "#overview";
 
   navLinks.forEach(link => {
     const isActive = link.getAttribute("href") === currentHash;
+
     link.classList.toggle("active", isActive);
-    if (isActive) link.setAttribute("aria-current", "page");
-    else link.removeAttribute("aria-current");
+
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
   });
 }
 
 window.addEventListener("hashchange", updateActiveNav);
-navLinks.forEach(link => link.addEventListener("click", updateActiveNav));
+updateActiveNav();
 
 // 16. Initial application setup
 function initializeApp() {
