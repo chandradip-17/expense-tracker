@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,23 +11,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script src="script.js" defer></script>
 </head>
 
 <body>
   <div class="app-shell">
     <aside class="sidebar">
-      <a class="brand" href="#">
+      <a class="brand" href="#overview" aria-label="SpendWise home">
         <span class="brand-icon">₹</span>
         <span>Spend<span class="brand-accent">Wise</span></span>
       </a>
 
       <div class="side-label">WORKSPACE</div>
-      <nav class="side-nav">
-        <a class="nav-link active" href="#overview"><span>▦</span> Overview</a>
-        <a class="nav-link" href="#transactions"><span>⇄</span> Transactions</a>
-        <a class="nav-link" href="#analytics"><span>◔</span> Analytics</a>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span aria-hidden="true">▦</span> Overview</a>
+        <a class="nav-link" href="#transactions"><span aria-hidden="true">⇄</span> Transactions</a>
+        <a class="nav-link" href="#analytics"><span aria-hidden="true">◔</span> Analytics</a>
       </nav>
 
       <div class="sidebar-bottom">
@@ -56,19 +55,19 @@
         </div>
         <div class="topbar-right">
           <span class="date-pill" id="today-date">Today</span>
-          <button class="primary-button" id="add-top-button">＋ Add Transaction</button>
+          <button class="primary-button" id="add-top-button" type="button">＋ Add Transaction</button>
         </div>
       </header>
 
-      <section class="summary-grid">
+      <section class="summary-grid" aria-label="Financial summary">
         <article class="summary-card balance-card">
           <div class="card-top">
             <span>Total Balance</span>
             <span class="card-icon">◈</span>
           </div>
-          <h2 id="total-balance">₹0</h2>
+          <h2 id="total-balance">₹0.00</h2>
           <p class="card-note">Income minus expenses</p>
-          <div class="balance-decoration">₹</div>
+          <div class="balance-decoration" aria-hidden="true">₹</div>
         </article>
 
         <article class="summary-card">
@@ -76,7 +75,7 @@
             <span>Total Income</span>
             <span class="card-icon income-icon">↗</span>
           </div>
-          <h2 id="total-income">₹0</h2>
+          <h2 id="total-income">₹0.00</h2>
           <p class="card-note"><span class="positive">↗</span> Money received</p>
         </article>
 
@@ -85,7 +84,7 @@
             <span>Total Expenses</span>
             <span class="card-icon expense-icon">↘</span>
           </div>
-          <h2 id="total-expenses">₹0</h2>
+          <h2 id="total-expenses">₹0.00</h2>
           <p class="card-note"><span class="negative">↘</span> Money spent</p>
         </article>
 
@@ -94,25 +93,25 @@
             <span>This Month's Savings</span>
             <span class="card-icon savings-icon">✧</span>
           </div>
-          <h2 id="monthly-savings">₹0</h2>
+          <h2 id="monthly-savings">₹0.00</h2>
           <p class="card-note" id="monthly-savings-note">Monthly income minus expenses</p>
         </article>
       </section>
 
-      <section class="dashboard-grid" id="analytics">
+      <section class="dashboard-grid" id="analytics" aria-label="Financial analytics">
         <article class="panel chart-panel">
           <div class="panel-heading">
             <div>
               <h3>Spending Overview</h3>
-              <p class="muted">Expenses by category</p>
+              <p class="muted">Expenses by category · This month</p>
             </div>
             <span class="mini-badge">This month</span>
           </div>
           <div class="donut-wrap">
-            <canvas id="category-chart" aria-label="Expenses by category chart"></canvas>
+            <canvas id="category-chart" aria-label="Expenses by category chart" role="img"></canvas>
             <div class="chart-center">
               <small>Total spent</small>
-              <strong id="chart-total">₹0</strong>
+              <strong id="chart-total">₹0.00</strong>
             </div>
           </div>
           <div class="category-legend" id="category-legend"></div>
@@ -127,7 +126,7 @@
             <span class="mini-badge">6 months</span>
           </div>
           <div class="bar-chart-wrap">
-            <canvas id="monthly-chart" aria-label="Monthly income and expense chart"></canvas>
+            <canvas id="monthly-chart" aria-label="Monthly income and expense chart" role="img"></canvas>
           </div>
           <div class="chart-key">
             <span><i class="key-dot income-dot"></i> Income</span>
@@ -142,7 +141,10 @@
             <h3>Recent Transactions</h3>
             <p class="muted">Keep track of where your money goes.</p>
           </div>
-          <button class="outline-button" id="add-list-button">＋ Add New</button>
+          <div class="transaction-tools">
+            <button class="outline-button" id="export-button" type="button">↓ Export CSV</button>
+            <button class="outline-button" id="add-list-button" type="button">＋ Add New</button>
+          </div>
         </div>
 
         <div class="filters">
@@ -173,9 +175,9 @@
         </div>
         <div class="empty-state" id="empty-state">
           <div class="empty-icon">₹</div>
-          <h3>No transactions yet</h3>
-          <p>Add your first income or expense to get started.</p>
-          <button class="primary-button" id="empty-add-button">＋ Add Transaction</button>
+          <h3>No transactions found</h3>
+          <p id="empty-state-message">Add your first income or expense to get started.</p>
+          <button class="primary-button" id="empty-add-button" type="button">＋ Add Transaction</button>
         </div>
       </section>
 
@@ -186,18 +188,17 @@
     </main>
   </div>
 
-  <!-- Add / Edit Transaction Dialog -->
-  <dialog id="transaction-dialog">
+  <dialog id="transaction-dialog" aria-labelledby="dialog-title">
     <form id="transaction-form" class="transaction-form">
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">YOUR MONEY, YOUR CONTROL</p>
           <h2 id="dialog-title">Add Transaction</h2>
         </div>
-        <button type="button" class="close-button" id="close-dialog" aria-label="Close">×</button>
+        <button type="button" class="close-button" id="close-dialog" aria-label="Close dialog">×</button>
       </div>
 
-      <label for="transaction-type">Transaction Type</label>
+      <label>Transaction Type</label>
       <div class="type-toggle">
         <label class="type-option">
           <input type="radio" name="transaction-type" value="expense" checked>
