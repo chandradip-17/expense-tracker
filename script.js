@@ -680,4 +680,27 @@ function initializeApp() {
   }
 }
 
+// 20. Update active sidebar navigation
+const navLinks = document.querySelectorAll(".nav-link");
+
+function updateActiveNav() {
+  const currentHash = window.location.hash || "#overview";
+
+  navLinks.forEach(link => {
+    const isActive = link.getAttribute("href") === currentHash;
+    link.classList.toggle("active", isActive);
+  });
+}
+
+// Update navigation when the URL hash changes
+window.addEventListener("hashchange", updateActiveNav);
+
+// Update navigation immediately when a link is clicked
+navLinks.forEach(link => {
+  link.addEventListener("click", updateActiveNav);
+});
+
+// Set the correct active link on page load
+updateActiveNav();
+
 initializeApp();
